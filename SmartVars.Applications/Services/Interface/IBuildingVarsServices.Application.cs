@@ -6,12 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartVars.Application.Interface
+namespace SmartVars.Application.Services.Interface
 {
-    public interface IBuidingVars
+    public interface IBuildingVarsServices
     {
         Task<BuildingVarsResultsServices<BuildingVarsModel>> CreatAsync(BuildingVarsModel model);
 
-        //Task<BuildingVarsResultsServices<BuildingVarsModel>> CreatAsync(BuildingVarsModel model);
     }
 }
