@@ -19,7 +19,7 @@ namespace SmartVars.Infra.Data.Repository
         {
             _context = context;
         }
-        public async Task<BuildingVars> CreateNewVars(BuildingVars buildingVars)
+        public async Task<BuildingVars> CreateNewVarsAsync(BuildingVars buildingVars)
         {
             _context.Add(buildingVars);
             await _context.SaveChangesAsync();

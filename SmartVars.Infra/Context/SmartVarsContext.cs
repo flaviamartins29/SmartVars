@@ -11,7 +11,7 @@ namespace SmartVars.Infra.Data.Context
         }
         protected override void OnConfiguring(DbContextOptionsBuilder modelBuilder)
         {
-            modelBuilder.UseInMemoryDatabase(databaseName : "DB_SmartVars");
+            modelBuilder.UseInMemoryDatabase(databaseName : "SmartVars_Data");
         }
         public DbSet<BuildingVars> BuildingVars { get; set; }
     }

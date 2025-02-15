@@ -11,7 +11,7 @@ namespace SmartVars.Domain.Repository
     {
         Task<BuildingVars> GetVarByIdAsync(int id);
         Task<ICollection<BuildingVars>> GetAllVarsListAsync();
-        Task<BuildingVars> CreateNewVars(BuildingVars buildingVars);
+        Task<BuildingVars> CreateNewVarsAsync(BuildingVars buildingVars);
         Task UpdateVarByIdAsync(BuildingVars buildingVars);
         Task DeleteVarByIdAsync(BuildingVars buildingVars);
 
