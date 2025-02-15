@@ -5,6 +5,7 @@ using SmartVars.Infra.Data.Context;
 using SmartVars.Infra.IoC;
 
 using System;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,9 +18,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.EnableAnnotations();
-    c.SwaggerDoc("v1", new OpenApiInfo 
-    { 
-        Title = "SmartVars API", 
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "SmartVars API",
         Version = "v1",
         Contact = new OpenApiContact
         {
@@ -32,6 +33,10 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddInfra(builder.Configuration);
 builder.Services.AddServices(builder.Configuration);
 
+builder.Services.AddMvc().AddJsonOptions(options =>
+{
+options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+});
 
 var app = builder.Build();
 

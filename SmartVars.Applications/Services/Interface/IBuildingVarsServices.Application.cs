@@ -11,6 +11,8 @@ namespace SmartVars.Application.Services.Interface
     public interface IBuildingVarsServices
     {
         Task<BuildingVarsResultsServices<BuildingVarsModel>> CreatAsync(BuildingVarsModel model);
+        Task<BuildingVarsResultsServices<ICollection<BuildingVarsModel>>> GetAsync();
+        Task<BuildingVarsResultsServices<BuildingVarsModel>> GetByIdAsync(int id);
 
     }
 }

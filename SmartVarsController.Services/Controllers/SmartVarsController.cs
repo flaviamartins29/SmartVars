@@ -21,7 +21,31 @@ namespace SmartVarsController.Services.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] BuildingVarsModel varModel)
         {
+
+
             var result = await _buidingVars.CreatAsync(varModel);
+            if (result.IsSucsess)
+                return Ok(result);
+
+            return BadRequest(result);
+
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Get()
+        {
+            var result = await _buidingVars.GetAsync();
+            if (result.IsSucsess)
+                return Ok(result);
+
+            return BadRequest(result);
+
+        }
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ActionResult> GetAll(int id)
+        {
+            var result = await _buidingVars.GetByIdAsync(id);
             if (result.IsSucsess)
                 return Ok(result);
 

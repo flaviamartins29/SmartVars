@@ -15,9 +15,12 @@ namespace SmartVars.Infra.Data.Repository
     {
         private readonly SmartVarsContext _context;
 
-        public BuildingVarsRepository(SmartVarsContext context) 
+        private readonly ILogger<BuildingVarsRepository> _logger;
+
+        public BuildingVarsRepository(SmartVarsContext context, ILogger<BuildingVarsRepository> logger)
         {
             _context = context;
+            _logger = logger;
         }
         public async Task<BuildingVars> CreateNewVarsAsync(BuildingVars buildingVars)
         {
@@ -29,33 +32,35 @@ namespace SmartVars.Infra.Data.Repository
         public async Task DeleteVarByIdAsync(BuildingVars buildingVars)
         {
             _context.Remove(buildingVars);
-            await _context.SaveChangesAsync();   
+            await _context.SaveChangesAsync();
         }
         public async Task<ICollection<BuildingVars>> GetAllVarsListAsync()
         {
-           return await _context.BuildingVars.ToListAsync();
+            return await _context.BuildingVars.ToListAsync();
         }
 
-        public async  Task<BuildingVars> GetVarByIdAsync(int id)
+        public async Task<BuildingVars> GetVarByIdAsync(int id)
         {
-            var yourVar = await _context.BuildingVars.Where(x => x.Id == id).FirstOrDefaultAsync();
             try
             {
-                if (_context.BuildingVars.Any(x => x.Id == id)) 
-                LogLevel.Information.ToString($"Your {id} was found");
+                var yourVar = await _context.BuildingVars.Where(x => x.Id == id).FirstOrDefaultAsync();
+                if (yourVar != null)
+                {
+                    _logger.LogInformation($"Your {id} was found");
+                }
+                else
+                {
+                    _logger.LogWarning($"Your {id} was not found");
+                }
 
+                return yourVar;
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, $"An error occurred while retrieving {id}");
                 throw;
             }
-
-
-            return yourVar;
-
         }
-
         public async Task UpdateVarByIdAsync(BuildingVars buildingVars)
         {
             _context.Update(buildingVars);
