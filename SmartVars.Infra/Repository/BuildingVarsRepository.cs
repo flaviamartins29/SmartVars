@@ -62,12 +62,5 @@ namespace SmartVars.Infra.Data.Repository
             await _context.SaveChangesAsync();
 
         }
-
-#region : Dispose
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-#endregion
     }
 }

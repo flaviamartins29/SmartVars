@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.OpenApi.Models;
 using SmartVars.Infra.Data.Context;
 using SmartVars.Infra.IoC;
+
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,11 +13,22 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<SmartVarsContext>(options =>
-options.UseInMemoryDatabase(builder.Configuration.GetConnectionString("MyDataMemory")));
+builder.Services.AddSwaggerGen(c =>
+{
+    c.EnableAnnotations();
+    c.SwaggerDoc("v1", new OpenApiInfo 
+    { 
+        Title = "SmartVars API", 
+        Version = "v1",
+        Contact = new OpenApiContact
+        {
+            Name = "Flávia Martins",
+            Email = "flavia.martins@******"
+        }
+    });
 
+});
 builder.Services.AddInfra(builder.Configuration);
 builder.Services.AddServices(builder.Configuration);
 
@@ -26,10 +39,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    app.UseSwaggerUI(c =>
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "SmartVars API v1")
 
-builder.Services.AddDbContext<SmartVarsContext>();
+    );
+}
 
 app.UseHttpsRedirection();
 

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace SmartVars.Domain.Repository
 {
-    public interface IBuildingVarsRepository : IDisposable
-    {
+    public interface IBuildingVarsRepository 
+    { 
         Task<BuildingVars> GetVarByIdAsync(int id);
         Task<ICollection<BuildingVars>> GetAllVarsListAsync();
         Task<BuildingVars> CreateNewVarsAsync(BuildingVars buildingVars);
