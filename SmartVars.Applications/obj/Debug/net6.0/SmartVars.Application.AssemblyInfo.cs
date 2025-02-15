@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartVars.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+998ac854bad20729ffc53903a3dfd930e115e7f6")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartVars.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartVars.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

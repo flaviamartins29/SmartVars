@@ -1,0 +1,89 @@
+TemplateEngineHost 
+#Build directories
+bin/
+obj/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Mono Auto Generated Files
+mono_crash.*
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# VS Code directories
+.vscode/
+
+# Package directories
+*.nupkg
+*.snupkg
+packages/
+artifacts/
+
+# Visual Studio Code backups
+.vscode/
+
+# Test Results
+TestResults/
+*.trx
+*.coverage
+
+# Publish files
+*.pubxml
+*.publish.xml
+
+# Others
+*.log
+*.tlog
+*.ide
+*.userprefs
+*.tmp
+*.temp
+*.bak
+*.cache
+*.bin
+*.v2
+*.vsidx
+
+
+
+/.vs/SmartVars/v17
+/.vs/SmartVars/obj
+/.vs/SmartVars/SmartVars.Applications/obj
+/.vs/SmartVars/SmartVars.Infra/obj/Debug/
+/SmartVars.Applications/obj/Debug/net6.0/SmartVars.Application.AssemblyInfoInputs.cache
+/SmartVars.Applications/obj/Debug/net6.0/SmartVars.Application.assets.cache
+/SmartVars.Applications/obj/Debug/net6.0/SmartVars.Application.csproj.AssemblyReference.cache
+/SmartVars.Applications/obj/project.assets.json
+/SmartVars.Applications/obj/project.nuget.cache
+/SmartVars.Applications/obj/SmartVars.Application.csproj.nuget.dgspec.json
+/SmartVars.Applications/obj/SmartVars.Application.csproj.nuget.g.props
+/SmartVars.Applications/obj/SmartVars.Application.csproj.nuget.g.targets
+/SmartVars.Infra/obj/Debug/net6.0/SmartVars.Infra.Data.AssemblyInfoInputs.cache
+/SmartVars.Infra/obj/Debug/net6.0/SmartVars.Infra.Data.assets.cache
+/SmartVars.Infra/obj/Debug/net6.0/SmartVars.Infra.Data.csproj.AssemblyReference.cache
+SmartVars.Applications/obj/project.assets.json
+SmartVars.Applications/obj/project.nuget.cache
+SmartVars.Applications/obj/SmartVars.Application.csproj.nuget.g.props
+SmartVars.Applications/obj/SmartVars.Application.csproj.nuget.dgspec.json
+SmartVars.Applications/obj/SmartVars.Application.csproj.nuget.g.targets
+SmartVars.Infra/obj/project.nuget.cache
+SmartVarsController.Services/obj/project.nuget.cache
+SmartVarsController.Services/obj/project.assets.json
+SmartVars.Infra.IoC/obj/Debug/net6.0/SmartVars.Infra.IoC.csproj.AssemblyReference.cache
+SmartVars.Infra.IoC/obj/Debug/net6.0/SmartVars.Infra.IoC.assets.cache
+SmartVars.Infra.IoC/obj/Debug/net6.0/SmartVars.Infra.IoC.AssemblyInfoInputs.cache
+SmartVars.Infra.IoC/obj/SmartVars.Infra.IoC.csproj.nuget.g.targets
+SmartVars.Infra.IoC/obj/project.nuget.cache
