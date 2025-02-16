@@ -1,36 +1,36 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SmartVars.Domain.Entities;
+using SmartVars.Domain.EventHandle.Service;
+using SmartVars.Domain.EventHandle.Service.Interfaces;
 using SmartVars.Domain.Repository;
 using SmartVars.Infra.Data.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartVars.Infra.Data.Repository
 {
     public class BuildingVarsRepository : IBuildingVarsRepository
     {
         private readonly SmartVarsContext _context;
-
         private readonly ILogger<BuildingVarsRepository> _logger;
+        private readonly ICommandEventHandle<CreateEventHandle> _eventHandle;
 
-        public BuildingVarsRepository(SmartVarsContext context, ILogger<BuildingVarsRepository> logger)
+
+        public BuildingVarsRepository(SmartVarsContext context, ILogger<BuildingVarsRepository> logger, ICommandEventHandle<CreateEventHandle> eventHandle)
         {
             _context = context;
             _logger = logger;
+            _eventHandle = eventHandle;
         }
         public async Task<BuildingVars> CreateNewVarsAsync(BuildingVars buildingVars)
         {
-
             try
             {
                 _context.Add(buildingVars);
                 await _context.SaveChangesAsync();
-                return buildingVars;
+                await _eventHandle.Dispatch(new CreateEventHandle(buildingVars));
+                _logger.LogInformation($"Your {buildingVars.Id} created");
 
+                return buildingVars;
             }
             catch (Exception ex)
             {
@@ -38,25 +38,8 @@ namespace SmartVars.Infra.Data.Repository
                 throw;
             }
         }
-
-        public async Task DeleteVarByIdAsync(BuildingVars buildingVars)
-        {
-            try
-            {
-                _context.Remove(buildingVars);
-                await _context.SaveChangesAsync();
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"An error occurred while delete the id: {buildingVars.Id}");
-                throw;
-            }
-            
-        }
         public async Task<ICollection<BuildingVars>> GetAllVarsListAsync()
         {
-
             return await _context.BuildingVars.ToListAsync();
         }
 
@@ -65,14 +48,8 @@ namespace SmartVars.Infra.Data.Repository
             try
             {
                 var yourVar = await _context.BuildingVars.Where(x => x.Id == id).FirstOrDefaultAsync();
-                if (yourVar != null)
-                {
+                if (yourVar == null)
                     _logger.LogInformation($"Your {id} was found");
-                }
-                else
-                {
-                    _logger.LogWarning($"Your {id} was not found");
-                }
 
                 return yourVar;
             }
@@ -86,16 +63,20 @@ namespace SmartVars.Infra.Data.Repository
         {
             try
             {
+                if(buildingVars == null)
+                    _logger.LogWarning($"Your {buildingVars.Id} was not found");
+
                 _context.Update(buildingVars);
                 await _context.SaveChangesAsync();
+                await _eventHandle.Dispatch(new CreateEventHandle(buildingVars));
+                _logger.LogInformation($"Your {buildingVars.Id} was updated");
+
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"An error occurred while update the id: {buildingVars.Id}");
                 throw;
             }
-            
-
         }
     }
 }
