@@ -5,6 +5,7 @@ using SmartVars.Application.Services.Interface;
 using SmartVars.Application.Validation;
 using SmartVars.Domain.Entities;
 using SmartVars.Domain.Repository;
+using SmartVars.Domain.Validations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,17 @@ namespace SmartVars.Application.Services
             return BuildingVarsResultsServices.Sucess(_mapper.Map<BuildingVarsModel>(data));
         }
 
+        public async Task<BuildingVarsResultsServices> DeleteAsync(int id)
+        {
+            var varComplete = await _buildingVarsRepository.GetVarByIdAsync(id);
+            if (varComplete == null)
+                return BuildingVarsResultsServices.Fail<BuildingVarsModel>("Id not found.");
+
+
+            await _buildingVarsRepository.DeleteVarByIdAsync(varComplete);
+            return BuildingVarsResultsServices.Sucess($"Var {id} deleted whith success");
+        }
+
         public async Task<BuildingVarsResultsServices<ICollection<BuildingVarsModel>>> GetAsync()
         {
             var allVars = await _buildingVarsRepository.GetAllVarsListAsync();
@@ -52,8 +64,37 @@ namespace SmartVars.Application.Services
         public async Task<BuildingVarsResultsServices<BuildingVarsModel>> GetByIdAsync(int id)
         {
             var idVars = await _buildingVarsRepository.GetVarByIdAsync(id);
+            if (idVars == null)
+                return  BuildingVarsResultsServices.Fail<BuildingVarsModel>("Id not found.");
+
             return BuildingVarsResultsServices.Sucess(_mapper.Map<BuildingVarsModel>(idVars));
         }
+
+        public async Task<BuildingVarsResultsServices> UpdateAsync(BuildingVarsModel model)
+        {
+            if (model == null)
+                return BuildingVarsResultsServices.Fail("Data are riqueride for delete");
+
+            var validation = new BuildingVarsValidateError().Validate(model);
+            if(!validation.IsValid)
+                return BuildingVarsResultsServices.RequestError<BuildingVarsModel>("Your Request is invalid, please enter the vulueType correct.", validation);
+
+            var varUpdate = await _buildingVarsRepository.GetVarByIdAsync(model.Id);
+            if (varUpdate == null)
+                return BuildingVarsResultsServices.Fail<BuildingVarsModel>("Id not found.");
+
+            varUpdate = _mapper.Map<BuildingVarsModel, BuildingVars>(model, varUpdate);
+
+            await _buildingVarsRepository.UpdateVarByIdAsync(varUpdate);
+            return BuildingVarsResultsServices.Sucess($"The {varUpdate.Id} was edited");
+
+
+
+        }
+
+
+
+
     }
 }
 

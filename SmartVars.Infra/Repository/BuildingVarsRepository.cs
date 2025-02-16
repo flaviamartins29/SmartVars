@@ -24,18 +24,39 @@ namespace SmartVars.Infra.Data.Repository
         }
         public async Task<BuildingVars> CreateNewVarsAsync(BuildingVars buildingVars)
         {
-            _context.Add(buildingVars);
-            await _context.SaveChangesAsync();
-            return buildingVars;
+
+            try
+            {
+                _context.Add(buildingVars);
+                await _context.SaveChangesAsync();
+                return buildingVars;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while create a new var");
+                throw;
+            }
         }
 
         public async Task DeleteVarByIdAsync(BuildingVars buildingVars)
         {
-            _context.Remove(buildingVars);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Remove(buildingVars);
+                await _context.SaveChangesAsync();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while delete the id: {buildingVars.Id}");
+                throw;
+            }
+            
         }
         public async Task<ICollection<BuildingVars>> GetAllVarsListAsync()
         {
+
             return await _context.BuildingVars.ToListAsync();
         }
 
@@ -63,8 +84,17 @@ namespace SmartVars.Infra.Data.Repository
         }
         public async Task UpdateVarByIdAsync(BuildingVars buildingVars)
         {
-            _context.Update(buildingVars);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Update(buildingVars);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while update the id: {buildingVars.Id}");
+                throw;
+            }
+            
 
         }
     }

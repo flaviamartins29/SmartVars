@@ -19,39 +19,59 @@ namespace SmartVarsController.Services.Controllers
 
         }
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] BuildingVarsModel varModel)
+        public async Task<ActionResult> PostAsync([FromBody] BuildingVarsModel varModel)
         {
-
-
             var result = await _buidingVars.CreatAsync(varModel);
             if (result.IsSucsess)
                 return Ok(result);
 
             return BadRequest(result);
-
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult> GetAsync()
         {
             var result = await _buidingVars.GetAsync();
             if (result.IsSucsess)
                 return Ok(result);
 
             return BadRequest(result);
-
         }
+
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult> GetAll(int id)
+        public async Task<ActionResult> GetAllAsync(int id)
         {
             var result = await _buidingVars.GetByIdAsync(id);
             if (result.IsSucsess)
                 return Ok(result);
 
             return BadRequest(result);
-
         }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<ActionResult> UpdateAsync([FromBody] BuildingVarsModel varModel)
+        {
+            var result = await _buidingVars.UpdateAsync(varModel);
+            if (result.IsSucsess)
+                return Ok(result);
+
+            return BadRequest(result);
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<ActionResult> DeleteAsync(int id)
+        {
+            var result = await _buidingVars.DeleteAsync(id);
+            if (result.IsSucsess)
+                return Ok(result);
+
+            return BadRequest(result);
+        }
+
+
 
     }
 }
