@@ -13,7 +13,6 @@ namespace SmartVars.Domain.Repository
         Task<ICollection<BuildingVars>> GetAllVarsListAsync();
         Task<BuildingVars> CreateNewVarsAsync(BuildingVars buildingVars);
         Task UpdateVarByIdAsync(BuildingVars buildingVars);
-        Task DeleteVarByIdAsync(BuildingVars buildingVars);
 
     }
 }

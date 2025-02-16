@@ -1,6 +1,9 @@
+using Abp.Events.Bus.Handlers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
+using SmartVars.Domain.EventHandle.Service;
+using SmartVars.Domain.EventHandle.Service.Interfaces;
 using SmartVars.Infra.Data.Context;
 using SmartVars.Infra.IoC;
 
@@ -14,6 +17,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddScoped<ICommandEventHandle<CreateEventHandle>, CommandEventHandle>();
+//builder.Services.AddTransient<IEventHandler<CreateEventHandle>, CreatedEventHandler>();
 
 builder.Services.AddSwaggerGen(c =>
 {

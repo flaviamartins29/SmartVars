@@ -87,3 +87,4 @@ SmartVars.Infra.IoC/obj/Debug/net6.0/SmartVars.Infra.IoC.assets.cache
 SmartVars.Infra.IoC/obj/Debug/net6.0/SmartVars.Infra.IoC.AssemblyInfoInputs.cache
 SmartVars.Infra.IoC/obj/SmartVars.Infra.IoC.csproj.nuget.g.targets
 SmartVars.Infra.IoC/obj/project.nuget.cache
+/.vs/SmartVars/config/applicationhost.config

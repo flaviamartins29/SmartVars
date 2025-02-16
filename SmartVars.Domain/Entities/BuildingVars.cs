@@ -17,6 +17,8 @@ namespace SmartVars.Domain.Entities
         public double? MyDouble { get; set; }
         public DateTime? MyDateTime { get; set; }
 
+
+
         public BuildingVars() { }
 
         public BuildingVars(int? myInt, string? myString, bool thisMy, decimal myDecimal, double myDouble, DateTime myDateTime )

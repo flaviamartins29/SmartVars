@@ -43,17 +43,6 @@ namespace SmartVars.Application.Services
             return BuildingVarsResultsServices.Sucess(_mapper.Map<BuildingVarsModel>(data));
         }
 
-        public async Task<BuildingVarsResultsServices> DeleteAsync(int id)
-        {
-            var varComplete = await _buildingVarsRepository.GetVarByIdAsync(id);
-            if (varComplete == null)
-                return BuildingVarsResultsServices.Fail<BuildingVarsModel>("Id not found.");
-
-
-            await _buildingVarsRepository.DeleteVarByIdAsync(varComplete);
-            return BuildingVarsResultsServices.Sucess($"Var {id} deleted whith success");
-        }
-
         public async Task<BuildingVarsResultsServices<ICollection<BuildingVarsModel>>> GetAsync()
         {
             var allVars = await _buildingVarsRepository.GetAllVarsListAsync();

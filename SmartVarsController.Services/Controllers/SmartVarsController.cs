@@ -59,19 +59,5 @@ namespace SmartVarsController.Services.Controllers
 
             return BadRequest(result);
         }
-
-        [HttpDelete]
-        [Route("{id}")]
-        public async Task<ActionResult> DeleteAsync(int id)
-        {
-            var result = await _buidingVars.DeleteAsync(id);
-            if (result.IsSucsess)
-                return Ok(result);
-
-            return BadRequest(result);
-        }
-
-
-
     }
 }
