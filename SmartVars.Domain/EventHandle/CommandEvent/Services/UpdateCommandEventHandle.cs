@@ -1,8 +1,8 @@
-﻿using Abp.Events.Bus.Handlers;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+using SmartVars.Domain.EventHandle.CommandEvent.Services.Interface;
 
-namespace SmartVars.Domain.EventHandle.Service;
-public class UpdateCommandEventHandle : IEventHandler
+namespace SmartVars.Domain.EventHandle.CommandEvent.Services;
+public class UpdateCommandEventHandle : IEventHandle<CreateEventHandle>
 {
     private readonly ILogger<UpdateCommandEventHandle> _logger;
 

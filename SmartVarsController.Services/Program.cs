@@ -1,14 +1,15 @@
-using Abp.Events.Bus.Handlers;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
+using SmartVars.Domain.EventHandle.CommandEvent.Services;
+using SmartVars.Domain.EventHandle.EmailEvent;
 using SmartVars.Domain.EventHandle.Service;
 using SmartVars.Domain.EventHandle.Service.Interfaces;
-using SmartVars.Infra.Data.Context;
+using System.Net.Mail;
 using SmartVars.Infra.IoC;
 
 using System;
 using System.Text.Json.Serialization;
+using NETCore.MailKit.Core;
+using SmartVars.Domain.EventHandle.CommandEvent.Services.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +19,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddScoped<ICommandEventHandle<CreateEventHandle>, CommandEventHandle>();
-//builder.Services.AddTransient<IEventHandler<CreateEventHandle>, CreatedEventHandler>();
+builder.Services.AddScoped(typeof(ICommandEventHandle<>), typeof(CommandEventHandle<>));
+builder.Services.AddTransient<IEventHandle<CreateEventHandle>, CreateCommandEventHandle>();
+
+
+
 
 builder.Services.AddSwaggerGen(c =>
 {

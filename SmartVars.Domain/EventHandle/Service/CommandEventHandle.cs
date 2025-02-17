@@ -1,27 +1,24 @@
-﻿using Abp.Events.Bus.Handlers;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SmartVars.Domain.EventHandle.CommandEvent.Services.Interface;
 using SmartVars.Domain.EventHandle.Service.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartVars.Domain.EventHandle.Service
 {
-    public class CommandEventHandle : ICommandEventHandle<CreateEventHandle>
+    public class CommandEventHandle<TEvent> : ICommandEventHandle<TEvent>
     {
         private readonly IServiceProvider _serviceProvider;
+
         public CommandEventHandle(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
-        public async Task Dispatch<TEvent>(TEvent @event)
+
+        public async Task Dispatch(TEvent @event)
         {
-            var handlers = _serviceProvider.GetServices<IEventHandler<TEvent>>();
+            var handlers = _serviceProvider.GetServices<IEventHandle<TEvent>>();
             foreach (var handler in handlers)
             {
-                handler.HandleEvent(@event);
+                await handler.Handle(@event);
             }
         }
     }

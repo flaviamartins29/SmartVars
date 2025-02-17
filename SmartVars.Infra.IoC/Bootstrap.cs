@@ -5,12 +5,11 @@ using Microsoft.Extensions.Configuration;
 using SmartVars.Domain.Repository;
 using SmartVars.Infra.Data.Repository;
 using SmartVars.Application.Mapping;
-using System;
-using SmartVars.Application.Model;
-using SmartVars.Domain.Entities;
 using SmartVars.Application.Services.Interface;
 using SmartVars.Application.Services;
 using AutoMapper;
+using SmartVars.Domain.EventHandle.EmailEvent;
+using System.Configuration;
 
 namespace SmartVars.Infra.IoC
 {
@@ -18,11 +17,12 @@ namespace SmartVars.Infra.IoC
     {
         public static IServiceCollection AddInfra(this IServiceCollection services, IConfiguration config)
         {
+
             services.AddDbContext<SmartVarsContext>(options => options.UseInMemoryDatabase("SmartVars_Data"));
 
             services.AddScoped<IBuildingVarsServices, BuildingVarsServices>();
             services.AddScoped<IBuildingVarsRepository, BuildingVarsRepository>();
-            //services.AddAutoMapper(typeof(MappingProfile));
+            
             return services;
         }
 
@@ -36,5 +36,15 @@ namespace SmartVars.Infra.IoC
             return services;
         }
 
+        //public static IServiceCollection AddSettingServices(this IServiceCollection services, IConfiguration config)
+        //{
+        //    services.Configure<EmailSettings>(config.GetSection("Email"));
+
+        //    return services;
+
+
+
+
+        //}
     }
 }

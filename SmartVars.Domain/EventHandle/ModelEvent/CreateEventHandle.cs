@@ -1,17 +1,16 @@
 ﻿using SmartVars.Domain.Entities;
 
-namespace SmartVars.Domain.EventHandle.Service;
 public class CreateEventHandle
 {
     public string Message { get; set; }
     public Guid EventId { get; set; }
     public DateTime DateTimeEvent { get; set; }
     public string EventName { get; set; }
-    public int VarId { get; set; }  
+    public int VarId { get; set; }
 
     public CreateEventHandle()
     {
-        Message = "Created or Modificate";
+        Message = "Created or Modified";
         EventId = Guid.NewGuid();
         DateTimeEvent = DateTime.Now;
         EventName = "create";
@@ -19,6 +18,11 @@ public class CreateEventHandle
 
     public CreateEventHandle(BuildingVars buildingVars)
     {
+        if (buildingVars == null)
+        {
+            throw new ArgumentNullException(nameof(buildingVars), "BuildingVars cannot be null.");
+        }
+
         Message = "New variable created";
         EventId = Guid.NewGuid();
         DateTimeEvent = DateTime.Now;

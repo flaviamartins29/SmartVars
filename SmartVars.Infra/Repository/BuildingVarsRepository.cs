@@ -12,14 +12,14 @@ namespace SmartVars.Infra.Data.Repository
     {
         private readonly SmartVarsContext _context;
         private readonly ILogger<BuildingVarsRepository> _logger;
-        private readonly ICommandEventHandle<CreateEventHandle> _eventHandle;
-
+        private readonly ICommandEventHandle<CreateEventHandle> _eventCreateHandle;
+        private readonly ICommandEventHandle<UpdateEventHandle> _eventUpdateHandle;
 
         public BuildingVarsRepository(SmartVarsContext context, ILogger<BuildingVarsRepository> logger, ICommandEventHandle<CreateEventHandle> eventHandle)
         {
             _context = context;
             _logger = logger;
-            _eventHandle = eventHandle;
+            _eventCreateHandle = eventHandle;
         }
         public async Task<BuildingVars> CreateNewVarsAsync(BuildingVars buildingVars)
         {
@@ -27,7 +27,7 @@ namespace SmartVars.Infra.Data.Repository
             {
                 _context.Add(buildingVars);
                 await _context.SaveChangesAsync();
-                await _eventHandle.Dispatch(new CreateEventHandle(buildingVars));
+                await _eventCreateHandle.Dispatch(new CreateEventHandle(buildingVars));
                 _logger.LogInformation($"Your {buildingVars.Id} created");
 
                 return buildingVars;
@@ -68,7 +68,7 @@ namespace SmartVars.Infra.Data.Repository
 
                 _context.Update(buildingVars);
                 await _context.SaveChangesAsync();
-                await _eventHandle.Dispatch(new CreateEventHandle(buildingVars));
+                await _eventUpdateHandle.Dispatch(new UpdateEventHandle(buildingVars));
                 _logger.LogInformation($"Your {buildingVars.Id} was updated");
 
             }
