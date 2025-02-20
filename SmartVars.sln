@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartVars.Application", "SmartVars.Applications\SmartVars.Application.csproj", "{3D7F3F51-9551-47E6-AFD3-0D3369B576AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartVars.Application", "SmartVars.Applications\SmartVars.Application.csproj", "{3D7F3F51-9551-47E6-AFD3-0D3369B576AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartVars.Domain", "SmartVars.Domain\SmartVars.Domain.csproj", "{0806C41B-3C86-481F-85BF-7B554C66C5D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartVars.Domain", "SmartVars.Domain\SmartVars.Domain.csproj", "{0806C41B-3C86-481F-85BF-7B554C66C5D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartVars.Infra.Data", "SmartVars.Infra\SmartVars.Infra.Data.csproj", "{190DAD9C-30CD-4AD1-B1CE-2CEE21856100}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartVars.Infra.Data", "SmartVars.Infra\SmartVars.Infra.Data.csproj", "{190DAD9C-30CD-4AD1-B1CE-2CEE21856100}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-Services", "1-Services", "{DCA0721D-9435-475B-8EF6-F56740D17BA2}"
 EndProject
@@ -19,9 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4-Infra", "4-Infra", "{DACD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SRC", "SRC", "{C502FC9D-7762-4FBC-9421-FEDE81754BDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartVars.Infra.IoC", "SmartVars.Infra.IoC\SmartVars.Infra.IoC.csproj", "{20F8D517-8BF5-4517-A548-100E21259462}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartVars.Infra.IoC", "SmartVars.Infra.IoC\SmartVars.Infra.IoC.csproj", "{20F8D517-8BF5-4517-A548-100E21259462}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartVarsController.Services", "SmartVarsController.Services\SmartVarsController.Services.csproj", "{A5E25DF7-6CF5-46FF-AB86-B7DC596C372B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartVarsController", "SmartVarsController.Services\SmartVarsController.csproj", "{A5E25DF7-6CF5-46FF-AB86-B7DC596C372B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
