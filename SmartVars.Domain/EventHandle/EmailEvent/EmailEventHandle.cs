@@ -32,16 +32,22 @@ namespace SmartVars.Domain.EventHandle.EmailEvent
 
         private SendGridMessage PrepareMessage(List<string> emailsTo, string subject, CreateEventHandle createEventHandle)
         {
-            var from = new EmailAddress(_emailFrom, "Seu Nome");
-            var plainTextContent = createEventHandle.ToString();
-            var htmlContent = $"<p>{createEventHandle.ToString()}</p>";
+            var from = new EmailAddress(_emailFrom, "Flavia Martins");
+            var subjectEmail = "News from API Smart Vars";
+            var plainTextContent = createEventHandle.GetType();
+            var htmlContent = "<H1>Have a new var add or update </H1>" +
+                              $"<p><B>Event:</B> {createEventHandle.EventName}</p>" +
+                              $"<p><B>Message:</B> {createEventHandle.Message}</p>" +
+                              $"<p><B>VarId:</B> {createEventHandle.VarId}</p>" +
+                              $"<p><B>Date:</B> {createEventHandle.DateTimeEvent}</p>";
 
             var message = new SendGridMessage
             {
                 From = from,
                 Subject = subject,
-                PlainTextContent = plainTextContent,
+                PlainTextContent = plainTextContent.Attributes.ToString(),
                 HtmlContent = htmlContent
+            
             };
 
             foreach (var email in emailsTo)
