@@ -1,21 +1,16 @@
 ﻿using AutoMapper;
-using SmartVars.Application.Model;
-using SmartVars.Application.Notification;
-using SmartVars.Application.Services.Interface;
-using SmartVars.Application.Validation;
+using SmartVars.Application.Services.Interfaces;
+using SmartVars.Application.Shared;
+using SmartVars.Application.ViewModel;
 using SmartVars.Domain.Entities;
-using SmartVars.Domain.Repository;
+using SmartVars.Domain.Repository.Services;
 using SmartVars.Domain.Validations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartVars.Application.Services
 {
     public class BuildingVarsServices : IBuildingVarsServices
     {
+        private bool _disposed = false;
         private readonly IBuildingVarsRepository _buildingVarsRepository;
         private readonly IMapper _mapper;
 
@@ -24,10 +19,10 @@ namespace SmartVars.Application.Services
             _buildingVarsRepository = varsRepository;
             _mapper = mapper;
         }
-        public async Task<BuildingVarsResultsServices<BuildingVarsModel>> CreatAsync(BuildingVarsModel varsModel)
+        public async Task<BuildingVarsResults<BuildingVarsViewModel>> CreateAsync(BuildingVarsViewModel varsModel)
         {
             if (varsModel == null)
-                return BuildingVarsResultsServices.Fail<BuildingVarsModel>("Null fields are not accepted. Please ensure all fields are filled.");
+                return BuildingVarsResults.Fail<BuildingVarsViewModel>("Null fields are not accepted. Please ensure all fields are filled.");
 
             var stringResult = varsModel.MyString;
             if (stringResult == null)
@@ -35,55 +30,78 @@ namespace SmartVars.Application.Services
 
             var result = new BuildingVarsValidateError().Validate(varsModel);
             if (!result.IsValid)
-                return BuildingVarsResultsServices.RequestError<BuildingVarsModel>("Your Request is invalid, please enter the vulueType correct.", result);
+                return BuildingVarsResults.RequestError<BuildingVarsViewModel>("Your Request is invalid, please enter the vulueType correct.", result);
+
 
             var valueType = _mapper.Map<BuildingVars>(varsModel);
-            var data = await _buildingVarsRepository.CreateNewVarsAsync(valueType);
+            var data = await _buildingVarsRepository.CreateVarsAsync(valueType);
 
-            return BuildingVarsResultsServices.Sucess(_mapper.Map<BuildingVarsModel>(data));
+            return BuildingVarsResults.Sucess(_mapper.Map<BuildingVarsViewModel>(data));
         }
 
-        public async Task<BuildingVarsResultsServices<ICollection<BuildingVarsModel>>> GetAsync()
+        public async Task<BuildingVarsResults<ICollection<BuildingVarsViewModel>>> GetAsync()
         {
-            var allVars = await _buildingVarsRepository.GetAllVarsListAsync();
-            return BuildingVarsResultsServices.Sucess<ICollection<BuildingVarsModel>>(_mapper.Map<ICollection<BuildingVarsModel>>(allVars));
+            var allVars = await _buildingVarsRepository.GetVarsListAsync();
+            return BuildingVarsResults.Sucess<ICollection<BuildingVarsViewModel>>(_mapper.Map<ICollection<BuildingVarsViewModel>>(allVars));
 
         }
 
-        public async Task<BuildingVarsResultsServices<BuildingVarsModel>> GetByIdAsync(int id)
+        public async Task<BuildingVarsResults<BuildingVarsViewModel>> GetByIdAsync(int id)
         {
             var idVars = await _buildingVarsRepository.GetVarByIdAsync(id);
             if (idVars == null)
-                return  BuildingVarsResultsServices.Fail<BuildingVarsModel>("Id not found.");
+                return BuildingVarsResults.Fail<BuildingVarsViewModel>("Id not found.");
 
-            return BuildingVarsResultsServices.Sucess(_mapper.Map<BuildingVarsModel>(idVars));
+            return BuildingVarsResults.Sucess(_mapper.Map<BuildingVarsViewModel>(idVars));
         }
 
-        public async Task<BuildingVarsResultsServices> UpdateAsync(BuildingVarsModel model)
+        public async Task<BuildingVarsResults> UpdateAsync(BuildingVarsViewModel model)
         {
             if (model == null)
-                return BuildingVarsResultsServices.Fail("Data are riqueride for delete");
+                return BuildingVarsResults.Fail("Data are riqueride for delete");
 
             var validation = new BuildingVarsValidateError().Validate(model);
-            if(!validation.IsValid)
-                return BuildingVarsResultsServices.RequestError<BuildingVarsModel>("Your Request is invalid, please enter the vulueType correct.", validation);
+            if (!validation.IsValid)
+                return BuildingVarsResults.RequestError<BuildingVarsViewModel>("Your Request is invalid, please enter the vulueType correct.", validation);
 
             var varUpdate = await _buildingVarsRepository.GetVarByIdAsync(model.Id);
             if (varUpdate == null)
-                return BuildingVarsResultsServices.Fail<BuildingVarsModel>("Id not found.");
+                return BuildingVarsResults.Fail<BuildingVarsViewModel>("Id not found.");
 
-            varUpdate = _mapper.Map<BuildingVarsModel, BuildingVars>(model, varUpdate);
+            varUpdate = _mapper.Map<BuildingVarsViewModel, BuildingVars>(model, varUpdate);
 
             await _buildingVarsRepository.UpdateVarByIdAsync(varUpdate);
-            return BuildingVarsResultsServices.Sucess($"The {varUpdate.Id} was edited");
-
-
-
+            return BuildingVarsResults.Sucess($"The {varUpdate.Id} was edited");
         }
 
+        #region Dispose
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    // Liberar recursos gerenciados
+                    if (_buildingVarsRepository is IDisposable disposableRepository)
+                    {
+                        disposableRepository.Dispose();
+                    }
 
+                    if (_mapper is IDisposable disposableMapper)
+                    {
+                        disposableMapper.Dispose();
+                    }
+                }
+                _disposed = true;
+            }
+        }
 
-
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }
 

@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SmartVars.Applications\SmartVars.Application.csproj" />
     <ProjectReference Include="..\SmartVars.Domain\SmartVars.Domain.csproj" />
+    <ProjectReference Include="..\SmartVars.Infra.Http\SmartVars.Infra.Http\SmartVars.Infra.Http.csproj" />
     <ProjectReference Include="..\SmartVars.Infra\SmartVars.Infra.Data.csproj" />
   </ItemGroup>
 

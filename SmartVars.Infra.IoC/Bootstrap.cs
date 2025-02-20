@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using SmartVars.Infra.Data.Context;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using SmartVars.Domain.Repository;
-using SmartVars.Infra.Data.Repository;
+using Microsoft.Extensions.DependencyInjection;
 using SmartVars.Application.Mapping;
-using SmartVars.Application.Services.Interface;
 using SmartVars.Application.Services;
-using AutoMapper;
-using SmartVars.Domain.EventHandle.EmailEvent;
-using System.Configuration;
+using SmartVars.Application.Services.Interfaces;
+using SmartVars.Domain.EventHandle.RepositoryHttp.Interfaces;
+using SmartVars.Domain.Repository.Services;
+using SmartVars.Infra.Data.Context;
+using SmartVars.Infra.Data.Repository;
+using SmartVars.Infra.Http.HttpRepository;
 
 namespace SmartVars.Infra.IoC
 {
@@ -22,7 +22,7 @@ namespace SmartVars.Infra.IoC
 
             services.AddScoped<IBuildingVarsServices, BuildingVarsServices>();
             services.AddScoped<IBuildingVarsRepository, BuildingVarsRepository>();
-            
+
             return services;
         }
 
@@ -36,15 +36,18 @@ namespace SmartVars.Infra.IoC
             return services;
         }
 
-        //public static IServiceCollection AddSettingServices(this IServiceCollection services, IConfiguration config)
-        //{
-        //    services.Configure<EmailSettings>(config.GetSection("Email"));
 
-        //    return services;
+        public static IServiceCollection AddServicesHttp(this IServiceCollection services, IConfiguration config)
+        {
+            services.AddScoped<ISendEmailEvent, SendEmailEvent>();
 
+            services.AddHttpClient("MyHttpClient", client =>
+            {
+                client.BaseAddress = new Uri(config["ApiBaseUrl"]);
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
 
-
-
-        //}
+            return services;
+        }
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmartVars.Domain.Validations
+﻿namespace SmartVars.Domain.Validations
 {
     public class BuildingVarsValidationException : Exception
     {
@@ -13,9 +7,9 @@ namespace SmartVars.Domain.Validations
 
         public static void WhenError(bool hasError, string mesageError)
         {
-            if (hasError) 
+            if (hasError)
                 throw new BuildingVarsValidationException(mesageError);
-            
+
         }
 
     }

@@ -1,5 +1,4 @@
 ﻿using SmartVars.Domain.Entities;
-using System;
 
 namespace SmartVars.Domain.EventHandle.Service
 {

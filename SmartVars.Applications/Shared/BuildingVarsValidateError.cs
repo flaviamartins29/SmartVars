@@ -1,14 +1,9 @@
 ﻿using FluentValidation;
-using SmartVars.Application.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SmartVars.Application.ViewModel;
 
-namespace SmartVars.Application.Validation
+namespace SmartVars.Application.Shared
 {
-    public class BuildingVarsValidateError : AbstractValidator<BuildingVarsModel>
+    public class BuildingVarsValidateError : AbstractValidator<BuildingVarsViewModel>
     {
         public BuildingVarsValidateError()
         {
@@ -17,7 +12,7 @@ namespace SmartVars.Application.Validation
              .WithMessage("The field must contain exactly one character as an integer, try again.");
 
             RuleFor(x => x.MyString)
-            .Must(x => x  is string || x == null)
+            .Must(x => x is string || x == null)
             .WithMessage("The field must contain exactly one character as a string, try again.");
 
             RuleFor(x => x.ThisMy)

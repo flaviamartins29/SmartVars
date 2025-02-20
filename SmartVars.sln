@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartVars.Infra.IoC", "Smar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartVarsController", "SmartVarsController.Services\SmartVarsController.csproj", "{A5E25DF7-6CF5-46FF-AB86-B7DC596C372B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartVars.Infra.Http", "SmartVars.Infra.Http\SmartVars.Infra.Http\SmartVars.Infra.Http.csproj", "{F9B0B6AF-714E-4C95-ACB0-303743F5DA7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{A5E25DF7-6CF5-46FF-AB86-B7DC596C372B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5E25DF7-6CF5-46FF-AB86-B7DC596C372B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5E25DF7-6CF5-46FF-AB86-B7DC596C372B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9B0B6AF-714E-4C95-ACB0-303743F5DA7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9B0B6AF-714E-4C95-ACB0-303743F5DA7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9B0B6AF-714E-4C95-ACB0-303743F5DA7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9B0B6AF-714E-4C95-ACB0-303743F5DA7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +69,7 @@ Global
 		{DACD29C9-1287-4A1A-A9EB-662628202075} = {C502FC9D-7762-4FBC-9421-FEDE81754BDC}
 		{20F8D517-8BF5-4517-A548-100E21259462} = {DACD29C9-1287-4A1A-A9EB-662628202075}
 		{A5E25DF7-6CF5-46FF-AB86-B7DC596C372B} = {DCA0721D-9435-475B-8EF6-F56740D17BA2}
+		{F9B0B6AF-714E-4C95-ACB0-303743F5DA7B} = {DACD29C9-1287-4A1A-A9EB-662628202075}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F7591C36-74A1-4056-95D0-4BD4D7D24B28}

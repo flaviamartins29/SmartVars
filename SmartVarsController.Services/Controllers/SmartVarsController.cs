@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SmartVars.Application.Model;
-using SmartVars.Application.Services;
-using SmartVars.Application.Services.Interface;
-using SmartVars.Infra.Data.Context;
+﻿using Microsoft.AspNetCore.Mvc;
+using SmartVars.Application.Services.Interfaces;
+using SmartVars.Application.ViewModel;
 
 namespace SmartVarsController.Services.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/APISmartVars")]
+    [Serializable]
     [ApiController]
     public class SmartVarsController : ControllerBase
     {
@@ -19,9 +17,9 @@ namespace SmartVarsController.Services.Controllers
 
         }
         [HttpPost]
-        public async Task<ActionResult> PostAsync([FromBody] BuildingVarsModel varModel)
+        public async Task<ActionResult> PostAsync([FromBody] BuildingVarsViewModel varModel)
         {
-            var result = await _buidingVars.CreatAsync(varModel);
+            var result = await _buidingVars.CreateAsync(varModel);
             if (result.IsSucsess)
                 return Ok(result);
 
@@ -51,7 +49,7 @@ namespace SmartVarsController.Services.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult> UpdateAsync([FromBody] BuildingVarsModel varModel)
+        public async Task<ActionResult> UpdateAsync([FromBody] BuildingVarsViewModel varModel)
         {
             var result = await _buidingVars.UpdateAsync(varModel);
             if (result.IsSucsess)

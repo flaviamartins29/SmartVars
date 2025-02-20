@@ -1,20 +1,19 @@
-﻿using SendGrid;
-using SendGrid.Helpers.Mail;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using SendGrid.Helpers.Mail;
+using SmartVars.Domain.EventHandle.RepositoryHttp.Interfaces;
 
 namespace SmartVars.Domain.EventHandle.EmailEvent
 {
-    public class EmailNotifications
+    public class EmailEventHandle
     {
         private readonly string _apiKey;
         private readonly string _emailFrom;
+        private readonly ISendEmailEvent _sendEmailEvent;
 
-        public EmailNotifications(string apiKey, string emailFrom)
+        public EmailEventHandle(string apiKey, string emailFrom, ISendEmailEvent sendEmailEvent)
         {
             _apiKey = apiKey ?? throw new ArgumentException(nameof(apiKey));
             _emailFrom = emailFrom ?? throw new ArgumentException(nameof(emailFrom));
+            _sendEmailEvent = sendEmailEvent;
         }
 
         public async Task SendEmail(List<string> emailsTo, string subject, CreateEventHandle createEventHandle)
@@ -22,7 +21,7 @@ namespace SmartVars.Domain.EventHandle.EmailEvent
             try
             {
                 var message = PrepareMessage(emailsTo, subject, createEventHandle);
-                await SendEmailBySendGridAsync(message);
+                await _sendEmailEvent.SendEmailBySendGridAsync(message);
             }
             catch (Exception ex)
             {
@@ -34,7 +33,6 @@ namespace SmartVars.Domain.EventHandle.EmailEvent
         private SendGridMessage PrepareMessage(List<string> emailsTo, string subject, CreateEventHandle createEventHandle)
         {
             var from = new EmailAddress(_emailFrom, "Seu Nome");
-            //var subject = subject;
             var plainTextContent = createEventHandle.ToString();
             var htmlContent = $"<p>{createEventHandle.ToString()}</p>";
 
@@ -52,16 +50,6 @@ namespace SmartVars.Domain.EventHandle.EmailEvent
             }
 
             return message;
-        }
-
-        private async Task SendEmailBySendGridAsync(SendGridMessage message)
-        {
-            var client = new SendGridClient(_apiKey);
-            var response = await client.SendEmailAsync(message);
-            if (response.StatusCode != System.Net.HttpStatusCode.OK && response.StatusCode != System.Net.HttpStatusCode.Accepted)
-            {
-                Console.WriteLine($"Erro ao enviar e-mail: {response.StatusCode}");
-            }
         }
     }
 }

@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SmartVars.Domain.Entities;
 using SmartVars.Domain.EventHandle.Service;
 using SmartVars.Domain.EventHandle.Service.Interfaces;
-using SmartVars.Domain.Repository;
+using SmartVars.Domain.Repository.Services;
 using SmartVars.Infra.Data.Context;
 
 namespace SmartVars.Infra.Data.Repository
@@ -14,6 +15,7 @@ namespace SmartVars.Infra.Data.Repository
         private readonly ILogger<BuildingVarsRepository> _logger;
         private readonly ICommandEventHandle<CreateEventHandle> _eventCreateHandle;
         private readonly ICommandEventHandle<UpdateEventHandle> _eventUpdateHandle;
+        private bool _disposed = false;
 
         public BuildingVarsRepository(SmartVarsContext context, ILogger<BuildingVarsRepository> logger, ICommandEventHandle<CreateEventHandle> eventHandle)
         {
@@ -21,7 +23,7 @@ namespace SmartVars.Infra.Data.Repository
             _logger = logger;
             _eventCreateHandle = eventHandle;
         }
-        public async Task<BuildingVars> CreateNewVarsAsync(BuildingVars buildingVars)
+        public async Task<BuildingVars> CreateVarsAsync(BuildingVars buildingVars)
         {
             try
             {
@@ -38,7 +40,7 @@ namespace SmartVars.Infra.Data.Repository
                 throw;
             }
         }
-        public async Task<ICollection<BuildingVars>> GetAllVarsListAsync()
+        public async Task<ICollection<BuildingVars>> GetVarsListAsync()
         {
             return await _context.BuildingVars.ToListAsync();
         }
@@ -63,7 +65,7 @@ namespace SmartVars.Infra.Data.Repository
         {
             try
             {
-                if(buildingVars == null)
+                if (buildingVars == null)
                     _logger.LogWarning($"Your {buildingVars.Id} was not found");
 
                 _context.Update(buildingVars);
@@ -76,7 +78,28 @@ namespace SmartVars.Infra.Data.Repository
             {
                 _logger.LogError(ex, $"An error occurred while update the id: {buildingVars.Id}");
                 throw;
+                ;
             }
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _context?.Dispose();
+                    _eventCreateHandle?.Dispose();
+                    _eventUpdateHandle?.Dispose();
+                }
+
+                _disposed = true;
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

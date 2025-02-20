@@ -1,15 +1,10 @@
 using Microsoft.OpenApi.Models;
-using SmartVars.Domain.EventHandle.CommandEvent.Services;
-using SmartVars.Domain.EventHandle.EmailEvent;
+using SmartVars.Domain.CommandEvent.Services;
+using SmartVars.Domain.CommandEvent.Services.Interface;
 using SmartVars.Domain.EventHandle.Service;
 using SmartVars.Domain.EventHandle.Service.Interfaces;
-using System.Net.Mail;
 using SmartVars.Infra.IoC;
-
-using System;
 using System.Text.Json.Serialization;
-using NETCore.MailKit.Core;
-using SmartVars.Domain.EventHandle.CommandEvent.Services.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,10 +37,11 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddInfra(builder.Configuration);
 builder.Services.AddServices(builder.Configuration);
+builder.Services.AddServicesHttp(builder.Configuration);
 
 builder.Services.AddMvc().AddJsonOptions(options =>
 {
-options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 });
 
 var app = builder.Build();

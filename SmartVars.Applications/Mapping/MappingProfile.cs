@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using SmartVars.Application.ViewModel;
 using SmartVars.Domain.Entities;
-using SmartVars.Application.Model;
 
 namespace SmartVars.Application.Mapping
 {
@@ -8,7 +8,7 @@ namespace SmartVars.Application.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<BuildingVars, BuildingVarsModel>().ReverseMap();
+            CreateMap<BuildingVars, BuildingVarsViewModel>().ReverseMap();
         }
     }
 }

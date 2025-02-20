@@ -1,9 +1,4 @@
 ﻿using SmartVars.Domain.Validations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartVars.Domain.Entities
 {
@@ -21,11 +16,11 @@ namespace SmartVars.Domain.Entities
 
         public BuildingVars() { }
 
-        public BuildingVars(int? myInt, string? myString, bool thisMy, decimal myDecimal, double myDouble, DateTime myDateTime )
+        public BuildingVars(int? myInt, string? myString, bool thisMy, decimal myDecimal, double myDouble, DateTime myDateTime)
         {
             Validation(myInt, myString, thisMy, myDecimal, myDouble, myDateTime);
-        }  
-        
+        }
+
         private void Validation(int? myInt, string? myString, bool? thisMy, decimal? myDecimal, double? myDouble, DateTime? myDateTime)
         {
             BuildingVarsValidationException.WhenError(myInt is not int, "Your myInt is empty. Please type something to be recorded");

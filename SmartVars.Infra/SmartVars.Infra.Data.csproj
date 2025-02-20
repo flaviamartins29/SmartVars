@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="SmartVars.Infra.Http\**" />
+    <EmbeddedResource Remove="SmartVars.Infra.Http\**" />
+    <None Remove="SmartVars.Infra.Http\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.20" />
   </ItemGroup>
