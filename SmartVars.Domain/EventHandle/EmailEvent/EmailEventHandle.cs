@@ -44,7 +44,7 @@ namespace SmartVars.Domain.EventHandle.EmailEvent
             var message = new SendGridMessage
             {
                 From = from,
-                Subject = subject,
+                Subject = subjectEmail,
                 PlainTextContent = plainTextContent.Attributes.ToString(),
                 HtmlContent = htmlContent
             
